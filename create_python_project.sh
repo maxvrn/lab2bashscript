@@ -112,6 +112,19 @@ EOF
 
 echo "✓ Файлы созданы: src/main.py, requirements.txt, .gitignore, README.md"
 
+# --- ПРОВЕРКА НАЛИЧИЯ МОДУЛЯ VENV ---
+echo "Проверяю наличие модуля venv для python$PYTHON_VERSION..."
+if ! python$PYTHON_VERSION -c "import venv" 2>/dev/null; then
+    echo "❌ ОШИБКА: Модуль 'venv' для Python $PYTHON_VERSION не установлен."
+    echo "Установите его командой:"
+    echo "    sudo apt install python$PYTHON_VERSION-venv"
+    echo ""
+    echo "Или установите глобальный пакет virtualenv:"
+    echo "    sudo apt install python3-virtualenv"
+    exit 1
+fi
+echo "✓ Модуль venv доступен."
+
 echo "Создаю виртуальное окружение с Python $PYTHON_VERSION..."
 
 python$PYTHON_VERSION -m venv venv
